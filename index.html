@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coming Soon - Noxel</title>
-    <!-- Menggunakan font Google Montserrat agar terlihat modern dan elegan -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* Reset margin & padding */
         * {
             margin: 0;
             padding: 0;
@@ -18,7 +16,7 @@
         body, html {
             height: 100%;
             font-family: 'Montserrat', sans-serif;
-            overflow: hidden; /* Mencegah munculnya scrollbar */
+            overflow: hidden; 
         }
 
         /* Container Video Background */
@@ -45,18 +43,18 @@
             object-fit: cover;
         }
 
-        /* Lapisan Gelap (Overlay) */
+        /* Lapisan Overlay Gelap */
         .overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.65); /* Sedikit digelapkan agar teks panjang lebih terbaca */
+            background: rgba(0, 0, 0, 0.65); 
             z-index: -1;
         }
 
-        /* Tata Letak Konten Teks & Tombol */
+        /* Kontainer Utama Konten */
         .content {
             position: relative;
             z-index: 1;
@@ -65,41 +63,66 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            text-align: center;
             color: #ffffff;
             padding: 0 20px;
         }
 
-        .content h1 {
+        /* Center Stage menggunakan Grid agar Teks dan Logo bisa bertumpuk di tempat yang sama */
+        .center-stage {
+            display: grid;
+            place-items: center;
+            margin-bottom: 40px; /* Jarak antara stage tengah dan tombol */
+        }
+
+        .text-group, .logo {
+            grid-area: 1 / 1; /* Menempatkan teks dan logo di satu titik/koordinat yang sama */
+            text-align: center;
+        }
+
+        /* Animasi fadeOut pada seluruh bungkus teks di detik ke-17 */
+        .text-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeOutContainer 0.5s ease forwards 17s;
+        }
+
+        .text-group h1 {
             font-size: 5rem;
             font-weight: 900;
             letter-spacing: 5px;
             text-transform: uppercase;
             margin-bottom: 10px;
             opacity: 0;
-            animation: fadeInUp 1s ease forwards 0.5s, fadeOut 0.5s ease forwards 17s; 
+            animation: fadeInUp 1s ease forwards 0.5s; 
         }
 
-        .tagline {
+        .text-group .tagline {
             font-size: 1.5rem;
             font-weight: 700;
             letter-spacing: 8px;
-            margin-bottom: 15px; /* Jarak diperkecil karena ada teks di bawahnya */
+            margin-bottom: 15px;
             opacity: 0;
-            animation: fadeInUp 1s ease forwards 1s, fadeOut 0.5s ease forwards 17s;
+            animation: fadeInUp 1s ease forwards 1s;
         }
 
-        /* Styling untuk teks keterangan tambahan */
-        .description {
+        .text-group .description {
             font-size: 1rem;
             font-weight: 300;
             line-height: 1.6;
             letter-spacing: 1.5px;
-            max-width: 600px; /* Membatasi lebar teks agar rapi di desktop */
-            margin-bottom: 40px;
+            max-width: 600px;
             opacity: 0;
-            /* Delay masuk 1.5s agar muncul setelah tagline */
-            animation: fadeInUp 1s ease forwards 1.5s, fadeOut 0.5s ease forwards 17s;
+            animation: fadeInUp 1s ease forwards 1.5s;
+        }
+
+        /* Logo disembunyikan di awal, lalu muncul di detik ke-17 */
+        .logo {
+            width: 250px; /* Ukuran default logo */
+            max-width: 80vw; /* Agar tidak kebesaran di HP */
+            opacity: 0;
+            visibility: hidden;
+            animation: fadeInLogo 1s ease forwards 17s;
         }
 
         .btn-follow {
@@ -113,7 +136,7 @@
             border-radius: 30px;
             transition: background 0.3s ease, color 0.3s ease;
             opacity: 0;
-            /* Delay masuk 2s, mulai getar di 17.5s */
+            /* Muncul detik 2, Bergetar terus menerus mulai detik 17.5 */
             animation: fadeInUp 1s ease forwards 2s, shake 0.5s linear infinite 17.5s;
         }
 
@@ -122,35 +145,25 @@
             color: #000000;
         }
 
-        /* Keyframes Animations */
+        /* ----- KEYFRAMES ----- */
         @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes fadeOut {
-            0% {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(0);
-            }
-            100% {
-                opacity: 0;
-                visibility: hidden;
-                transform: translateY(-20px); /* Efek menghilang perlahan ke atas */
-                margin: 0;
-                height: 0;
-                padding: 0;
-                display: none;
-            }
+        /* Hilangkan Teks tanpa merusak tata letak tinggi tombol */
+        @keyframes fadeOutContainer {
+            0% { opacity: 1; visibility: visible; transform: scale(1); }
+            100% { opacity: 0; visibility: hidden; transform: scale(0.95); }
         }
 
+        /* Munculkan logo dengan efek sedikit terangkat */
+        @keyframes fadeInLogo {
+            0% { opacity: 0; visibility: hidden; transform: translateY(20px); }
+            100% { opacity: 1; visibility: visible; transform: translateY(0); }
+        }
+
+        /* Efek Bergetar Tombol */
         @keyframes shake {
             0% { transform: translateX(0); }
             20% { transform: translateX(-8px) rotate(-3deg); }
@@ -162,64 +175,51 @@
 
         /* ----- PENGATURAN RESPONSIF (MOBILE) ----- */
         @media (max-width: 768px) {
-            .content h1 {
-                font-size: 3.5rem;
-                letter-spacing: 3px;
-            }
-            .tagline {
-                font-size: 1.2rem;
-                letter-spacing: 5px;
-            }
-            .description {
-                font-size: 0.95rem;
-                padding: 0 10px;
-            }
-            .btn-follow {
-                padding: 12px 35px;
-                font-size: 1.1rem;
-            }
+            .text-group h1 { font-size: 3.5rem; letter-spacing: 3px; }
+            .text-group .tagline { font-size: 1.2rem; letter-spacing: 5px; }
+            .text-group .description { font-size: 0.95rem; padding: 0 10px; }
+            .btn-follow { padding: 12px 35px; font-size: 1.1rem; }
+            .logo { width: 200px; }
         }
 
         @media (max-width: 480px) {
-            .content h1 {
-                font-size: 2.5rem;
-                letter-spacing: 2px;
-            }
-            .tagline {
-                font-size: 0.9rem;
-                letter-spacing: 4px;
-                margin-bottom: 10px;
-            }
-            .description {
-                font-size: 0.85rem;
-                letter-spacing: 1px;
-                margin-bottom: 30px;
-            }
-            .btn-follow {
-                padding: 10px 28px;
-                font-size: 1rem;
-            }
+            .text-group h1 { font-size: 2.5rem; letter-spacing: 2px; }
+            .text-group .tagline { font-size: 0.9rem; letter-spacing: 4px; margin-bottom: 10px; }
+            .text-group .description { font-size: 0.85rem; letter-spacing: 1px; }
+            .btn-follow { padding: 10px 28px; font-size: 1rem; }
+            .logo { width: 160px; }
+            .center-stage { margin-bottom: 30px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Video Background -->
+    <!-- Video Background Baru -->
     <div class="video-container">
         <video autoplay loop muted playsinline>
-            <source src="https://github.com/noxel-id/Coming-Soon-Web/raw/refs/heads/main/11111%20(1).mp4" type="video/mp4">
+            <source src="https://github.com/noxel-id/Coming-Soon-Web/raw/refs/heads/main/0606%20(1).mp4" type="video/mp4">
             Video tidak didukung di browser ini.
         </video>
     </div>
 
-    <!-- Lapisan Overlay Gelap -->
     <div class="overlay"></div>
 
-    <!-- Konten Teks dan Tombol -->
+    <!-- Konten -->
     <div class="content">
-        <h1>COMING SOON</h1>
-        <p class="tagline">DARE TO DREAM.</p>
-        <p class="description">Website sedang dalam tahap pengembangan. Nantinya untuk update katalog bisa cek di web ini serta marketplace Shopee dan Tokopedia.</p>
+        <!-- Center Stage: Teks dan Logo menempati ruang yang sama secara bertumpuk -->
+        <div class="center-stage">
+            
+            <div class="text-group">
+                <h1>COMING SOON</h1>
+                <p class="tagline">DARE TO DREAM.</p>
+                <p class="description">Website sedang dalam tahap pengembangan. Nantinya untuk update katalog bisa cek di web ini serta marketplace Shopee dan Tokopedia.</p>
+            </div>
+
+            <!-- Logo yang akan muncul di detik ke-17 -->
+            <img src="https://github.com/noxel-id/Coming-Soon-Web/blob/main/Logo%20tyransparan.png?raw=true" alt="Logo Noxel" class="logo">
+            
+        </div>
+
         <a href="https://instagram.com/noxel.id" target="_blank" class="btn-follow">Follow</a>
     </div>
 
