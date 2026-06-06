@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coming Soon - Noxel</title>
-    <!-- Menggunakan font Google Montserrat agar terlihat modern dan elegan -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -77,8 +76,8 @@
             text-transform: uppercase;
             margin-bottom: 10px;
             opacity: 0;
-            /* Animasi masuk delay 0.5 detik */
-            animation: fadeInUp 1s ease forwards 0.5s; 
+            /* Animasi masuk delay 0.5 detik, lalu animasi menghilang di detik ke-17 */
+            animation: fadeInUp 1s ease forwards 0.5s, fadeOut 0.5s ease forwards 17s; 
         }
 
         .content p {
@@ -87,8 +86,8 @@
             letter-spacing: 8px;
             margin-bottom: 40px;
             opacity: 0;
-            /* Animasi masuk delay 1 detik */
-            animation: fadeInUp 1s ease forwards 1s;
+            /* Animasi masuk delay 1 detik, lalu animasi menghilang di detik ke-17 */
+            animation: fadeInUp 1s ease forwards 1s, fadeOut 0.5s ease forwards 17s;
         }
 
         .btn-follow {
@@ -100,10 +99,10 @@
             font-weight: 700;
             text-transform: uppercase;
             border-radius: 30px;
-            transition: all 0.3s ease;
+            transition: background 0.3s ease, color 0.3s ease;
             opacity: 0;
-            /* Animasi masuk delay 1.5 detik */
-            animation: fadeInUp 1s ease forwards 1.5s;
+            /* Animasi masuk delay 1.5 detik, lalu mulai bergetar (shake) di detik ke-17.5 secara terus menerus */
+            animation: fadeInUp 1s ease forwards 1.5s, shake 0.5s linear infinite 17.5s;
         }
 
         /* Efek saat tombol disentuh/kursor diarahkan */
@@ -124,6 +123,32 @@
             }
         }
 
+        /* Keyframes untuk Menghilangkan Teks */
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+                visibility: visible;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+                margin: 0;
+                height: 0;
+                padding: 0;
+                display: none;
+            }
+        }
+
+        /* Keyframes untuk Efek Shaking (Bergetar/Mengajak) pada Button */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-8px) rotate(-3deg); }
+            40% { transform: translateX(6px) rotate(3deg); }
+            60% { transform: translateX(-5px) rotate(-2deg); }
+            80% { transform: translateX(4px) rotate(2deg); }
+            100% { transform: translateX(0); }
+        }
+
         /* ----- PENGATURAN RESPONSIF (MOBILE) ----- */
         @media (max-width: 768px) {
             .content h1 {
@@ -142,7 +167,7 @@
 
         @media (max-width: 480px) {
             .content h1 {
-                font-size: 2.5rem; /* Ukuran yang pas untuk HP */
+                font-size: 2.5rem;
                 letter-spacing: 2px;
             }
             .content p {
@@ -159,19 +184,15 @@
 </head>
 <body>
 
-    <!-- Video Background -->
     <div class="video-container">
-        <!-- Atribut 'playsinline' sangat penting agar video autoplay di HP (terutama iOS/iPhone) -->
         <video autoplay loop muted playsinline>
-            <source src="https://github.com/noxel-id/Coming-Soon-Web/raw/refs/heads/main/NOXEL_Brand_Film_Concept__Op.mp4" type="video/mp4">
+            <source src="https://github.com/noxel-id/Coming-Soon-Web/raw/refs/heads/main/video%20(2).mp4" type="video/mp4">
             Video tidak didukung di browser ini.
         </video>
     </div>
 
-    <!-- Lapisan Overlay Gelap -->
     <div class="overlay"></div>
 
-    <!-- Konten Teks dan Tombol -->
     <div class="content">
         <h1>COMING SOON</h1>
         <p>DARE TO DREAM.</p>
