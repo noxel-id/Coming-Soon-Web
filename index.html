@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coming Soon - Noxel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Menggunakan font Google Montserrat agar terlihat modern dan elegan -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     <style>
         /* Reset margin & padding */
@@ -29,7 +30,7 @@
             height: 100%;
             overflow: hidden;
             z-index: -2;
-            background-color: #000; /* Warna cadangan sebelum video termuat */
+            background-color: #000;
         }
 
         .video-container video {
@@ -41,17 +42,17 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            object-fit: cover; /* Memastikan video menutupi seluruh layar */
+            object-fit: cover;
         }
 
-        /* Lapisan Gelap (Overlay) agar teks lebih terbaca dengan jelas */
+        /* Lapisan Gelap (Overlay) */
         .overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6); /* Transparansi hitam 60% */
+            background: rgba(0, 0, 0, 0.65); /* Sedikit digelapkan agar teks panjang lebih terbaca */
             z-index: -1;
         }
 
@@ -76,18 +77,29 @@
             text-transform: uppercase;
             margin-bottom: 10px;
             opacity: 0;
-            /* Animasi masuk delay 0.5 detik, lalu animasi menghilang di detik ke-17 */
             animation: fadeInUp 1s ease forwards 0.5s, fadeOut 0.5s ease forwards 17s; 
         }
 
-        .content p {
+        .tagline {
             font-size: 1.5rem;
-            font-weight: 400;
+            font-weight: 700;
             letter-spacing: 8px;
+            margin-bottom: 15px; /* Jarak diperkecil karena ada teks di bawahnya */
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 1s, fadeOut 0.5s ease forwards 17s;
+        }
+
+        /* Styling untuk teks keterangan tambahan */
+        .description {
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.6;
+            letter-spacing: 1.5px;
+            max-width: 600px; /* Membatasi lebar teks agar rapi di desktop */
             margin-bottom: 40px;
             opacity: 0;
-            /* Animasi masuk delay 1 detik, lalu animasi menghilang di detik ke-17 */
-            animation: fadeInUp 1s ease forwards 1s, fadeOut 0.5s ease forwards 17s;
+            /* Delay masuk 1.5s agar muncul setelah tagline */
+            animation: fadeInUp 1s ease forwards 1.5s, fadeOut 0.5s ease forwards 17s;
         }
 
         .btn-follow {
@@ -101,17 +113,16 @@
             border-radius: 30px;
             transition: background 0.3s ease, color 0.3s ease;
             opacity: 0;
-            /* Animasi masuk delay 1.5 detik, lalu mulai bergetar (shake) di detik ke-17.5 secara terus menerus */
-            animation: fadeInUp 1s ease forwards 1.5s, shake 0.5s linear infinite 17.5s;
+            /* Delay masuk 2s, mulai getar di 17.5s */
+            animation: fadeInUp 1s ease forwards 2s, shake 0.5s linear infinite 17.5s;
         }
 
-        /* Efek saat tombol disentuh/kursor diarahkan */
         .btn-follow:hover {
             background: #ffffff;
             color: #000000;
         }
 
-        /* Keyframes untuk Animasi Melayang ke Atas (Fade In Up) */
+        /* Keyframes Animations */
         @keyframes fadeInUp {
             0% {
                 opacity: 0;
@@ -123,15 +134,16 @@
             }
         }
 
-        /* Keyframes untuk Menghilangkan Teks */
         @keyframes fadeOut {
             0% {
                 opacity: 1;
                 visibility: visible;
+                transform: translateY(0);
             }
             100% {
                 opacity: 0;
                 visibility: hidden;
+                transform: translateY(-20px); /* Efek menghilang perlahan ke atas */
                 margin: 0;
                 height: 0;
                 padding: 0;
@@ -139,7 +151,6 @@
             }
         }
 
-        /* Keyframes untuk Efek Shaking (Bergetar/Mengajak) pada Button */
         @keyframes shake {
             0% { transform: translateX(0); }
             20% { transform: translateX(-8px) rotate(-3deg); }
@@ -155,9 +166,13 @@
                 font-size: 3.5rem;
                 letter-spacing: 3px;
             }
-            .content p {
+            .tagline {
                 font-size: 1.2rem;
                 letter-spacing: 5px;
+            }
+            .description {
+                font-size: 0.95rem;
+                padding: 0 10px;
             }
             .btn-follow {
                 padding: 12px 35px;
@@ -170,9 +185,14 @@
                 font-size: 2.5rem;
                 letter-spacing: 2px;
             }
-            .content p {
+            .tagline {
                 font-size: 0.9rem;
                 letter-spacing: 4px;
+                margin-bottom: 10px;
+            }
+            .description {
+                font-size: 0.85rem;
+                letter-spacing: 1px;
                 margin-bottom: 30px;
             }
             .btn-follow {
@@ -184,18 +204,22 @@
 </head>
 <body>
 
+    <!-- Video Background -->
     <div class="video-container">
         <video autoplay loop muted playsinline>
-            <source src="https://github.com/noxel-id/Coming-Soon-Web/raw/refs/heads/main/video%20(2).mp4" type="video/mp4">
+            <source src="https://github.com/noxel-id/Coming-Soon-Web/raw/refs/heads/main/11111%20(1).mp4" type="video/mp4">
             Video tidak didukung di browser ini.
         </video>
     </div>
 
+    <!-- Lapisan Overlay Gelap -->
     <div class="overlay"></div>
 
+    <!-- Konten Teks dan Tombol -->
     <div class="content">
         <h1>COMING SOON</h1>
-        <p>DARE TO DREAM.</p>
+        <p class="tagline">DARE TO DREAM.</p>
+        <p class="description">Website sedang dalam tahap pengembangan. Nantinya untuk update katalog bisa cek di web ini serta marketplace Shopee dan Tokopedia.</p>
         <a href="https://instagram.com/noxel.id" target="_blank" class="btn-follow">Follow</a>
     </div>
 
